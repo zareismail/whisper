@@ -1,0 +1,30 @@
+{
+    "name": "zareismail/whisper",
+    "description": "A Laravel Nova tool.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0",
+        "zareismail/nova-pusher": "~0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zareismail\\Whisper\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zareismail\\Whisper\\WhisperServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

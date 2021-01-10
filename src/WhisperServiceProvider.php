@@ -25,9 +25,11 @@ class WhisperServiceProvider extends ServiceProvider
         \Zareismail\NovaContracts\Models\User::resolveRelationUsing('messages', function($model) {
             return $model->hasMany(Models\WhisperMessage::class, 'auth_id');
         });
-        \Broadcast::channel('Whisper.Created', function () {
-            return true;
-        }); 
+        $this->app->booted(function() {
+            \Broadcast::channel('Whisper.Created', function () {
+                return true;
+            });  
+        });
         Models\WhisperMessage::observe(Observers\WhisperMessage::class);
     } 
 }

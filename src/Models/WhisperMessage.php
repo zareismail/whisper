@@ -2,6 +2,7 @@
 
 namespace Zareismail\Whisper\Models;
 
+use Illuminate\Support\Str;
 
 class WhisperMessage extends Model 
 {  
@@ -14,6 +15,32 @@ class WhisperMessage extends Model
     	'read_at' => 'datetime',
     	'sent_at' => 'datetime',
     ]; 
+
+    /**
+     * Bootstrap the model and its traits.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function($model) {
+            $model->ensureUUID();
+        });
+    }
+
+    /**
+     * Ensure that uuid is filled.
+     * 
+     * @return $this
+     */
+    public function ensureUUID()
+    {
+        return $this->forceFill([
+            'uuid' => Str::isUuid($this->uuid) ? $this->uuid : Str::orderedUuid()
+        ]);
+    }
 
     /**
      * Query the related message.

@@ -44,6 +44,7 @@
   </div> 
 </template>
 <script>
+import { uuid } from 'vue-uuid';
 import { Minimum } from 'laravel-nova'
 import MapResources from './MapResources.vue'
 
@@ -67,24 +68,30 @@ export default {
       e.preventDefault()
 
       if(this.message.length) { 
+        let message = _.tap(this.newMessage(), message => {
+          this.message = ''
+          this.messages.push(message)
+        });
+        
         await this.$nextTick(() => { 
           return Minimum(
-            Nova.request().post('/nova-api/' + Nova.config.whisper.messages, {  
-              message: this.message,
-              recipient: this.conversation.contact.id,  
-              params: { 
-                messenger: true,
-              }
-            }),
+            Nova.request().post('/nova-api/' + Nova.config.whisper.messages, message),
             300
           ).then(({ data : {resource} }) => {
             // this.messages.push(resource) 
           })
         })
-
-        this.message = ''
       }  
     }, 
+
+    newMessage() {
+      return {  
+        message: this.message,
+        recipient: this.conversation.contact.id,  
+        auth_id: Nova.config.userId,
+        uuid: uuid.v4(),
+      }
+    },
 
     focus() { 
       this.$refs.input.focus()
@@ -130,6 +137,13 @@ export default {
       setTimeout(() => {
         this.$refs.messenger.scrollTop = this.$refs.messenger.scrollHeight + this.$refs.messenger.clientHeight
       }, 1) 
+    }
+  },
+
+  computed: {
+    uuid() {
+      console.log()
+      return this.uuid.v4()
     }
   },
 

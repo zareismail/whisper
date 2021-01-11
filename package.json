@@ -15,6 +15,7 @@
     },
     "dependencies": {
         "laravel-nova": "^1.7.0",
-        "vue": "^2.5.0"
+        "vue": "^2.5.0",
+        "vue-uuid": "^2.0.2"
     }
 }

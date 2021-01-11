@@ -16,9 +16,9 @@ class CreateWhisperMessagesTable extends Migration
         Schema::create('whisper_messages', function (Blueprint $table) {
             $table->id();
             $table->auth(); 
+            $table->uuid('uuid')->index(); 
             $table->auth('recipient'); 
             $table->text('message')->nullable(); 
-            $table->string('marked_as')->default('draft');
             $table->timestamp('read_at')->nullable();
             $table->timestamp('sent_at')->nullable();
             $table->foreignId('message_id')->nullable()->constrained('whisper_messages'); 

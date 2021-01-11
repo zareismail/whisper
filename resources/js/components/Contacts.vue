@@ -43,22 +43,18 @@
 
       Echo.private(`Whisper.Created`)
         .listen('.whisper.created', (message) => {
-          let contact = this.getContactByMessage(message)
-
-          if(contact !== undefined) {
+          if(message.recipient_id == Nova.config.userId) {
             this.$emit('update', {
-              contact: contact,
+              contact: this.getMessageOwner(message),
               message: message
             })
-          }  
+          }
         });
     }, 
 
     methods: { 
-      getContactByMessage(message) {
-        return this.contacts.find(
-          contact => contact.id == message.auth_id || contact.id == message.recipient_id
-        )
+      getMessageOwner(message) {
+        return this.contacts.find(contact => contact.id == message.auth_id)
       },
       
       /**

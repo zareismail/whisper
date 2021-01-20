@@ -18,7 +18,7 @@ abstract class Resource extends BaseResource
      *
      * @var string
      */
-    public static $title = 'text';
+    public static $title = 'message';
 
     /**
      * The columns that should be searched.
@@ -26,6 +26,6 @@ abstract class Resource extends BaseResource
      * @var array
      */
     public static $search = [
-        'id', 'text'
+        'id', 'message'
     ];
 }
